@@ -1,14 +1,14 @@
 package jeziel.graficadora.Modelos;
 
-public abstract class Vector<T extends Vector<T>> {
+public abstract class Vector<V extends Vector<V>> {
     protected float vectorX;
     protected float vectorY;
     protected float vectorZ;
 
-    public abstract T sumar(T v);
-    public abstract T restar(T v);
-    public abstract T multEscalar(float k);
-    public abstract float obtenerProductoPunto(T v);
+    public abstract V sumar(V v);
+    public abstract V restar(V v);
+    public abstract V multEscalar(float k);
+    public abstract float obtenerProductoPunto(V v);
     public abstract float obtenerMagnitud();
-    public abstract T normalizar();
+    public abstract V normalizar();
 }

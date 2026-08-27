@@ -59,6 +59,10 @@ public class Vector3D extends Vector<Vector3D>{
 
     @Override
     public Vector3D normalizar(){
-        return new Vector3D(vectorX/obtenerMagnitud(),vectorY/obtenerMagnitud(),vectorZ/obtenerMagnitud());
+        float mag=obtenerMagnitud();
+        if (mag==0){
+            throw new ArithmeticException("No se puede normalizar vector nulo");
+        }
+        return new Vector3D(vectorX/mag,vectorY/mag,vectorZ/mag);
     }
 }

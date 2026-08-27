@@ -2,7 +2,7 @@ package jeziel.graficadora.Modelos;
 
 public class Vector2D extends Vector<Vector2D>{
 
-    public Vector2D(float vectorX, Float vectorY) {
+    public Vector2D(float vectorX, float vectorY) {
         this.vectorX = vectorX;
         this.vectorY = vectorY;
     }
@@ -50,6 +50,10 @@ public class Vector2D extends Vector<Vector2D>{
 
     @Override
     public Vector2D normalizar(){
-        return new Vector2D(vectorX/obtenerMagnitud(),vectorY/obtenerMagnitud());
+        float mag=obtenerMagnitud();
+        if (mag==0){
+            throw new ArithmeticException("No se puede normalizar vector nulo");
+        }
+        return new Vector2D(vectorX/mag,vectorY/mag);
     }
 }
