@@ -3,7 +3,7 @@ package jeziel.graficadora.Modelos;
 public class Vector2D extends Vector{
     float vectorX;
     float vectorY;
-    Float magnitud;
+    float magnitud;
 
     public Vector2D(float vectorX, Float vectorY) {
         this.vectorX = vectorX;
