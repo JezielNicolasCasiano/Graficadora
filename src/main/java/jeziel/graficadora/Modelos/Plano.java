@@ -8,10 +8,9 @@ public class Plano {
 
     public Vector3D crearVector3D(float ordenadaX, float ordenadaY, float ordenadaZ){
         return new Vector3D(ordenadaX,ordenadaY, ordenadaZ);
-
     }
 
-    public Vector2D crearVector32(float ordenadaX, float ordenadaY){
+    public Vector2D crearVector2D(float ordenadaX, float ordenadaY){
         return new Vector2D(ordenadaX,ordenadaY);
     }
 
