@@ -5,4 +5,7 @@ module jeziel.graficadora {
 
     opens jeziel.graficadora to javafx.fxml;
     exports jeziel.graficadora;
+
+    opens jeziel.graficadora.Control to javafx.fxml;
+    exports jeziel.graficadora.Control;
 }
