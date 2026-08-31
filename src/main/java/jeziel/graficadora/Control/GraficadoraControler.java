@@ -19,28 +19,25 @@ public class GraficadoraControler implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //Graficacion en 3D, no tocar.
         Group subSceneRoot = new Group();
-
         Box box = new Box(100, 100, 100);
         box.setTranslateX(150);
         box.setTranslateY(150);
         subSceneRoot.getChildren().add(box);
-
         SubScene subScene = new SubScene(
                 subSceneRoot,
-                400,
-                400,
+                600,
+                600,
                 true,
                 SceneAntialiasing.BALANCED
         );
         subScene.setFill(Color.web("#2b2b2b"));
-
-        PerspectiveCamera camera = new PerspectiveCamera(false);
+        PerspectiveCamera camera = new PerspectiveCamera(true);
+        camera.setNearClip(0.1);
         subScene.setCamera(camera);
-
         subScene.widthProperty().bind(containerPane.widthProperty());
         subScene.heightProperty().bind(containerPane.heightProperty());
-
         containerPane.getChildren().add(subScene);
     }
 }
