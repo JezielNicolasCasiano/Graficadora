@@ -24,7 +24,7 @@ public class GraficadoraControler implements Initializable {
     private void abrirOperaciones(){
         try{
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("jeziel/graficadora/Operaciones.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Operaciones.fxml"));
             Parent root = loader.load();
 
             Stage stage = new Stage();
