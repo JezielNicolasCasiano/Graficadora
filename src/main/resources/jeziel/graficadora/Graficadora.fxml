@@ -12,7 +12,7 @@
             <MenuBar layoutY="8.0">
               <menus>
                 <Menu mnemonicParsing="false" text="Elementos creados" />
-                <Menu fx:id="MnRealzarOperacion" mnemonicParsing="false" onAction="#mostrarOperacion" text="realizar operación" />
+                <Menu fx:id="MnRealzarOperacion" mnemonicParsing="false" onAction="#abrirOperaciones" text="realizar operación" />
               </menus>
             </MenuBar>
          </children></Pane>

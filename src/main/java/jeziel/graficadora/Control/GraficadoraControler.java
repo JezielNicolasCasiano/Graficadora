@@ -1,15 +1,15 @@
 package jeziel.graficadora.Control;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
-import javafx.scene.PerspectiveCamera;
-import javafx.scene.SceneAntialiasing;
-import javafx.scene.SubScene;
+import javafx.scene.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Box;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -19,29 +19,23 @@ public class GraficadoraControler implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        /*
-        Group subSceneRoot = new Group();
+    }
+    @FXML
+    private void abrirOperaciones(){
+        try{
 
-        Box box = new Box(100, 100, 100);
-        box.setTranslateX(150);
-        box.setTranslateY(150);
-        subSceneRoot.getChildren().add(box);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Operadores.fxml"));
+            Parent root = loader.load();
 
-        SubScene subScene = new SubScene(
-                subSceneRoot,
-                400,
-                400,
-                true,
-                SceneAntialiasing.BALANCED
-        );
-        subScene.setFill(Color.web("#2b2b2b"));
+            Stage stage = new Stage();
+            stage.setTitle("Operaciones");
+            stage.setScene(new Scene(root));
 
-        PerspectiveCamera camera = new PerspectiveCamera(false);
-        subScene.setCamera(camera);
+            stage.show();
+        }catch (IOException e){
 
-        subScene.widthProperty().bind(containerPane.widthProperty());
-        subScene.heightProperty().bind(containerPane.heightProperty());
+            e.printStackTrace();
 
-        containerPane.getChildren().add(subScene);*/
+        }
     }
 }
