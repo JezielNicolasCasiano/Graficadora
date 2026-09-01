@@ -12,7 +12,7 @@ public class OperacionesController {
     private Button btnCerrar;
 
     @FXML
-    private void cerrarVenta(ActionEvent event){
+    private void cerrarVentana(ActionEvent event){
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
