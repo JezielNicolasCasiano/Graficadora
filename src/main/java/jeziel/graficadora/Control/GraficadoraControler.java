@@ -19,6 +19,7 @@ public class GraficadoraControler implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        /*
         Group subSceneRoot = new Group();
 
         Box box = new Box(100, 100, 100);
@@ -41,6 +42,6 @@ public class GraficadoraControler implements Initializable {
         subScene.widthProperty().bind(containerPane.widthProperty());
         subScene.heightProperty().bind(containerPane.heightProperty());
 
-        containerPane.getChildren().add(subScene);
+        containerPane.getChildren().add(subScene);*/
     }
 }
