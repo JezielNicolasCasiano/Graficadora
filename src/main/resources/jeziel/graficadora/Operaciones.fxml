@@ -5,10 +5,11 @@
 
 <AnchorPane prefHeight="666.0" prefWidth="329.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jeziel.graficadora.Operaciones">
    <children>
-      <ComboBox fx:id="CBoxVector1" layoutX="165.0" layoutY="57.0" prefWidth="150.0" />
-      <ComboBox fx:id="CBoxVextor2" layoutX="165.0" layoutY="92.0" prefWidth="150.0" />
-      <Label fx:id="lblVector1" layoutX="20.0" layoutY="54.0" prefHeight="31.0" prefWidth="119.0" text="Seleccionar vector 1" />
-      <Label fx:id="lblVector2" layoutX="20.0" layoutY="84.0" prefHeight="25.0" prefWidth="119.0" text="Seleccionar vector 2" />
+      <ComboBox fx:id="CBoxVector1" layoutX="165.0" layoutY="201.0" prefWidth="150.0" />
+      <ComboBox fx:id="CBoxVextor2" layoutX="165.0" layoutY="241.0" prefWidth="150.0" />
+      <Label fx:id="lblVector1" layoutX="14.0" layoutY="198.0" prefHeight="31.0" prefWidth="119.0" text="Seleccionar vector 1" />
+      <Label fx:id="lblVector2" layoutY="241.0" prefHeight="25.0" prefWidth="119.0" text="Seleccionar vector 2" />
       <Button fx:id="btnCerrar" layoutX="263.0" layoutY="14.0" mnemonicParsing="false" text="Cerrar" />
+      <Pane layoutX="9.0" layoutY="46.0" prefHeight="154.0" prefWidth="300.0" />
    </children>
 </AnchorPane>

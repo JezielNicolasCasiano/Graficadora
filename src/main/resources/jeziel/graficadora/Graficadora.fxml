@@ -19,14 +19,8 @@
                     <MenuItem mnemonicParsing="false" text="Delete" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Ver grafica">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
-                  </items>
-                </Menu>
               </menus>
             </MenuBar>
-            <Pane layoutY="33.0" prefHeight="665.0" prefWidth="328.0" />
          </children></Pane>
    </children>
 </AnchorPane>
