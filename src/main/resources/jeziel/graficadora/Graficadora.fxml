@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="696.0" prefWidth="902.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jeziel.graficadora.Control.GraficadoraControler">
+<AnchorPane prefHeight="696.0" prefWidth="902.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jeziel.graficadora.Control.GraficadoraControler">
    <children>
       <Pane id="PnMain" fx:id="containerPane" layoutX="-3.0" prefHeight="696.0" prefWidth="971.0">
          <children>
             <MenuBar layoutY="8.0">
               <menus>
-                <Menu mnemonicParsing="false" text="Elementos creados">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
-                  </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="realizar operación" />
+                <Menu mnemonicParsing="false" text="Elementos creados" />
+                <Menu fx:id="MnRealzarOperacion" mnemonicParsing="false" onAction="#mostrarOperacion" text="realizar operación" />
               </menus>
             </MenuBar>
          </children></Pane>
