@@ -14,6 +14,7 @@ public class HelloApplication extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Graficadora.fxml"));
         Scene scene = new Scene(loader.load());
         primaryStage.setTitle("Graficadora");
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
