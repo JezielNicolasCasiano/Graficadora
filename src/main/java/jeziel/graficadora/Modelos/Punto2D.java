@@ -2,30 +2,30 @@ package jeziel.graficadora.Modelos;
 
 public class Punto2D extends Punto<Punto2D, Vector2D>{
 
-    public Punto2D(float ordenadaX, float ordenadaY) {
+    public Punto2D(double ordenadaX, double ordenadaY) {
         this.ordenadaX = ordenadaX;
         this.ordenadaY = ordenadaY;
     }
 
-    public float getOrdenadaY() {
+    public double getOrdenadaY() {
         return ordenadaY;
     }
 
-    public void setOrdenadaY(float ordenadaY) {
+    public void setOrdenadaY(double ordenadaY) {
         this.ordenadaY = ordenadaY;
     }
 
-    public float getOrdenadaX() {return ordenadaX;}
+    public double getOrdenadaX() {return ordenadaX;}
 
-    public void setOrdenadaX(float ordenadaX) {
+    public void setOrdenadaX(double ordenadaX) {
         this.ordenadaX = ordenadaX;
     }
 
     @Override
-    public float obtenerDistanciaPunto(Punto2D p) {
-        float dx = this.ordenadaX - p.ordenadaX;
-        float dy = this.ordenadaY - p.ordenadaY;
-        return (float) Math.sqrt(dx*dx + dy*dy);
+    public double obtenerDistanciaPunto(Punto2D p) {
+        double dx = this.ordenadaX - p.ordenadaX;
+        double dy = this.ordenadaY - p.ordenadaY;
+        return Math.sqrt(dx*dx + dy*dy);
     }
 
     @Override
