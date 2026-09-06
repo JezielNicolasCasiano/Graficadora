@@ -2,7 +2,7 @@ package jeziel.graficadora.Modelos;
 
 public class Vector3D extends Vector<Vector3D>{
 
-    public Vector3D(double vectorX,double vectorY,double vectorZ) {
+    public Vector3D(double vectorX, double vectorY, double vectorZ) {
         this.vectorX = vectorX;
         this.vectorY = vectorY;
         this.vectorZ = vectorZ;
@@ -12,7 +12,7 @@ public class Vector3D extends Vector<Vector3D>{
         return vectorX;
     }
 
-    public void setVectorX(float vectorX) {
+    public void setVectorX(double vectorX) {
         this.vectorX = vectorX;
     }
 
@@ -20,7 +20,7 @@ public class Vector3D extends Vector<Vector3D>{
         return vectorY;
     }
 
-    public void setVectorY(float vectorY) {
+    public void setVectorY(double vectorY) {
         this.vectorY = vectorY;
     }
 
@@ -28,13 +28,13 @@ public class Vector3D extends Vector<Vector3D>{
         return vectorZ;
     }
 
-    public void setVectorZ(float vectorZ) {
+    public void setVectorZ(double vectorZ) {
         this.vectorZ = vectorZ;
     }
 
     @Override
     public double obtenerMagnitud(){
-        return (float) Math.sqrt(vectorX*vectorX+vectorY*vectorY+vectorZ*vectorZ);
+        return (double) Math.sqrt(vectorX*vectorX+vectorY*vectorY+vectorZ*vectorZ);
     }
 
     @Override

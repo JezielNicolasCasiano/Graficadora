@@ -11,7 +11,7 @@ public class Vector2D extends Vector<Vector2D>{
         return vectorX;
     }
 
-    public void setVectorX(float vectorX) {
+    public void setVectorX(double vectorX) {
         this.vectorX = vectorX;
     }
 
@@ -19,13 +19,13 @@ public class Vector2D extends Vector<Vector2D>{
         return vectorY;
     }
 
-    public void setVectorY(float vectorY) {
+    public void setVectorY(double vectorY) {
         this.vectorY = vectorY;
     }
 
     @Override
     public double obtenerMagnitud(){
-        return (float) Math.sqrt(vectorX*vectorX + vectorY * vectorY);
+        return (double) Math.sqrt(vectorX*vectorX + vectorY * vectorY);
     }
 
     @Override

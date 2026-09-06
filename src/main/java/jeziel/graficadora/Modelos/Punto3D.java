@@ -37,7 +37,7 @@ public class Punto3D extends Punto<Punto3D, Vector3D> {
         double dx = this.ordenadaX - p.ordenadaX;
         double dy = this.ordenadaY - p.ordenadaY;
         double dz = this.ordenadaZ - p.ordenadaZ;
-        return (float) Math.sqrt(dx*dx + dy*dy + dz*dz);
+        return (double) Math.sqrt(dx*dx + dy*dy + dz*dz);
     }
 
     @Override

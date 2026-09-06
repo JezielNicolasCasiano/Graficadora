@@ -3,40 +3,59 @@ import java.util.ArrayList;
 
 public class Plano {
 
-    ArrayList<Punto> Puntos = new ArrayList<>();
-    ArrayList<Vector> Vectores = new ArrayList<>();
+    ArrayList<Punto2D> puntos2D = new ArrayList<>();
+    ArrayList<Vector2D> vectores2D = new ArrayList<>();
+    ArrayList<Vector3D> vectores3D = new ArrayList<>();
+    ArrayList<Punto3D> puntos3D = new ArrayList<>();
 
-    public Vector3D crearVector3D(float ordenadaX, float ordenadaY, float ordenadaZ){
-        return new Vector3D(ordenadaX,ordenadaY, ordenadaZ);
+    public void crearVector3D(double ordenadaX, double ordenadaY, double ordenadaZ){
+        vectores3D.add(new Vector3D(ordenadaX,ordenadaY, ordenadaZ));
     }
 
-    public Vector2D crearVector2D(float ordenadaX, float ordenadaY){
-        return new Vector2D(ordenadaX,ordenadaY);
+    public void crearVector2D(double ordenadaX, double ordenadaY){
+        vectores2D.add(new Vector2D(ordenadaX,ordenadaY));
     }
 
-    public Punto3D crearPunto3D(float ordenadaX, float ordenadaY, float ordenadaZ){
-        return new Punto3D(ordenadaX, ordenadaY, ordenadaZ);
+    public void crearPunto3D(double ordenadaX, double ordenadaY, double ordenadaZ){
+        puntos3D.add(new Punto3D(ordenadaX, ordenadaY, ordenadaZ));
     }
 
-    public Punto2D crearPunto2D(float ordenadaX, float ordenadaY){
-        return new Punto2D(ordenadaX, ordenadaY);
+    public void crearPunto2D(double ordenadaX, double ordenadaY){
+        puntos2D.add(new Punto2D(ordenadaX, ordenadaY));
     }
 
     //getters y setters
 
-    public ArrayList<Punto> getPuntos() {
-        return Puntos;
+
+    public ArrayList<Punto2D> getPuntos2D() {
+        return puntos2D;
     }
 
-    public void setPuntos(ArrayList<Punto> puntos) {
-        Puntos = puntos;
+    public void setPuntos2D(ArrayList<Punto2D> puntos2D) {
+        this.puntos2D = puntos2D;
     }
 
-    public ArrayList<Vector> getVectores() {
-        return Vectores;
+    public ArrayList<Vector2D> getVectores2D() {
+        return vectores2D;
     }
 
-    public void setVectores(ArrayList<Vector> vectores) {
-        Vectores = vectores;
+    public void setVectores2D(ArrayList<Vector2D> vectores2D) {
+        this.vectores2D = vectores2D;
+    }
+
+    public ArrayList<Vector3D> getVectores3D() {
+        return vectores3D;
+    }
+
+    public void setVectores3D(ArrayList<Vector3D> vectores3D) {
+        this.vectores3D = vectores3D;
+    }
+
+    public ArrayList<Punto3D> getPuntos3D() {
+        return puntos3D;
+    }
+
+    public void setPuntos3D(ArrayList<Punto3D> puntos3D) {
+        this.puntos3D = puntos3D;
     }
 }

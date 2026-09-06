@@ -11,16 +11,11 @@ import java.io.IOException;
 
 public class HelloApplication extends Application {
     @Override
- public void start(Stage primaryStage) throws Exception{
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Graficadora.fxml"));
-        Scene scene = new Scene(loader.load());
-        primaryStage.setTitle("Graficadora");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("Plano-cartesiano.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 851, 593);
+        stage.setTitle("Hello!");
+        stage.setScene(scene);
+        stage.show();
     }
 }

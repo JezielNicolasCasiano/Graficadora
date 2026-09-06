@@ -25,7 +25,7 @@ public class Punto2D extends Punto<Punto2D, Vector2D>{
     public double obtenerDistanciaPunto(Punto2D p) {
         double dx = this.ordenadaX - p.ordenadaX;
         double dy = this.ordenadaY - p.ordenadaY;
-        return Math.sqrt(dx*dx + dy*dy);
+        return (double) Math.sqrt(dx*dx + dy*dy);
     }
 
     @Override
