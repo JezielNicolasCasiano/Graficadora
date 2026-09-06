@@ -11,4 +11,5 @@ public abstract class Vector<V extends Vector<V>> {
     public abstract double obtenerProductoPunto(V v);
     public abstract double obtenerMagnitud();
     public abstract V normalizar();
+
 }

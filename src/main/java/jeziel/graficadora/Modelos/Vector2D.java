@@ -56,4 +56,13 @@ public class Vector2D extends Vector<Vector2D>{
         }
         return new Vector2D(vectorX/mag,vectorY/mag);
     }
+
+    public Vector2D obtenerProyeccion(Vector2D u, Vector2D v){
+        double aux=u.obtenerProductoPunto(v)/(Math.pow(v.obtenerMagnitud(),2));
+        return new Vector2D(aux*v.vectorX,aux*v.vectorY);
+    }
+
+    public double obtenerAngulo(Vector2D u,Vector2D v){
+        return Math.asin(u.obtenerProductoPunto(v)/(u.obtenerMagnitud()*v.obtenerMagnitud()));
+    }
 }
