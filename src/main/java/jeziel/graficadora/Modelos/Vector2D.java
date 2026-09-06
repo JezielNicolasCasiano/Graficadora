@@ -2,30 +2,30 @@ package jeziel.graficadora.Modelos;
 
 public class Vector2D extends Vector<Vector2D>{
 
-    public Vector2D(float vectorX, float vectorY) {
+    public Vector2D(double vectorX, double vectorY) {
         this.vectorX = vectorX;
         this.vectorY = vectorY;
     }
 
-    public float getVectorX() {
+    public double getVectorX() {
         return vectorX;
     }
 
-    public void setVectorX(float vectorX) {
+    public void setVectorX(double vectorX) {
         this.vectorX = vectorX;
     }
 
-    public float getVectorY() {
+    public double getVectorY() {
         return vectorY;
     }
 
-    public void setVectorY(float vectorY) {
+    public void setVectorY(double vectorY) {
         this.vectorY = vectorY;
     }
 
     @Override
-    public float obtenerMagnitud(){
-        return (float) Math.sqrt(vectorX*vectorX + vectorY * vectorY);
+    public double obtenerMagnitud(){
+        return (double) Math.sqrt(vectorX*vectorX + vectorY * vectorY);
     }
 
     @Override
@@ -39,18 +39,18 @@ public class Vector2D extends Vector<Vector2D>{
     }
 
     @Override
-    public Vector2D multEscalar(float k){
+    public Vector2D multEscalar(double k){
         return new Vector2D(this.vectorX*k,this.vectorY*k);
     }
 
     @Override
-    public float obtenerProductoPunto(Vector2D v){
+    public double obtenerProductoPunto(Vector2D v){
         return (this.vectorX * v.vectorX) + (this.vectorY * v.vectorY);
     }
 
     @Override
     public Vector2D normalizar(){
-        float mag=obtenerMagnitud();
+        double mag=obtenerMagnitud();
         if (mag==0){
             throw new ArithmeticException("No se puede normalizar vector nulo");
         }
