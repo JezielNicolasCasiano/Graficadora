@@ -65,4 +65,8 @@ public class Vector2D extends Vector<Vector2D>{
     public double obtenerAngulo(Vector2D u,Vector2D v){
         return Math.asin(u.obtenerProductoPunto(v)/(u.obtenerMagnitud()*v.obtenerMagnitud()));
     }
+    @Override
+    public String toString() {
+        return String.format("v(%s, %s)", vectorX, vectorY);
+    }
 }
