@@ -37,4 +37,8 @@ public class Punto2D extends Punto<Punto2D, Vector2D>{
     public Punto2D trasladarPunto(Vector2D v){
         return new Punto2D(this.ordenadaX + v.getVectorX(), this.ordenadaY + v.getVectorY());
     }
+    @Override
+    public String toString() {
+        return String.format("P(%.2f, %.2f)", ordenadaX, ordenadaY);
+    }
 }

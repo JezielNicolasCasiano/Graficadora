@@ -30,7 +30,7 @@
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="291.0" prefWidth="1046.0">
                      <children>
-                        <Pane layoutX="3.0" prefHeight="293.0" prefWidth="1055.0">
+                        <Pane layoutX="7.0" layoutY="-1.0" prefHeight="293.0" prefWidth="1055.0">
                            <children>
                               <ComboBox fx:id="cboxVectorA" layoutX="32.0" layoutY="40.0" prefWidth="150.0" />
                               <ComboBox fx:id="cBoxVectorB" layoutX="32.0" layoutY="100.0" prefWidth="150.0" />
@@ -49,14 +49,20 @@
                               <TextField fx:id="txtPPunto" layoutX="332.0" layoutY="113.0" onAction="#handleProductoPunto" prefHeight="25.0" prefWidth="133.0" />
                               <TextField fx:id="txtNormalizar" layoutX="332.0" layoutY="151.0" onAction="#handleNormalizar" prefHeight="25.0" prefWidth="133.0" />
                               <TextField fx:id="txtEscalar" layoutX="599.0" layoutY="28.0" onAction="#handleGuardarEscalar" prefHeight="25.0" prefWidth="133.0" />
-                              <Pane layoutX="741.0" layoutY="27.0" prefHeight="172.0" prefWidth="263.0">
+                              <Pane layoutX="753.0" layoutY="3.0" prefHeight="194.0" prefWidth="263.0">
                                  <children>
-                                    <Button fx:id="btnVector" layoutX="129.0" layoutY="121.0" mnemonicParsing="false" onAction="#handleCrearVector" prefHeight="25.0" prefWidth="118.0" text="Crear Vector" />
-                                    <Button fx:id="btnPunto" layoutX="16.0" layoutY="121.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Crear punto" />
-                                    <TextField fx:id="txtY" layoutX="116.0" layoutY="74.0" onAction="#handleCrearVector" prefHeight="25.0" prefWidth="82.0" />
-                                    <TextField fx:id="txtX" layoutX="116.0" layoutY="22.0" onAction="#handleCrearVector" prefHeight="25.0" prefWidth="82.0" />
-                                    <Label fx:id="lblX" layoutX="21.0" layoutY="26.0" text="Coordenada X" />
-                                    <Label fx:id="lblY" layoutX="29.0" layoutY="78.0" text="Coordenada Y" />
+                                    <Button fx:id="btnVector" layoutX="132.0" layoutY="134.0" mnemonicParsing="false" onAction="#handleCrearVector" prefHeight="25.0" prefWidth="118.0" text="Crear Vector" />
+                                    <Button fx:id="btnPunto" layoutX="21.0" layoutY="134.0" mnemonicParsing="false" onAction="#handleCrearPunto" prefHeight="25.0" prefWidth="100.0" text="Crear punto" />
+                                    <TextField fx:id="txtY" layoutX="59.0" layoutY="85.0" onAction="#handleCrearVector" prefHeight="25.0" prefWidth="53.0" />
+                                    <TextField fx:id="txtX" layoutX="59.0" layoutY="53.0" onAction="#handleCrearVector" prefHeight="25.0" prefWidth="53.0" />
+                                    <Label fx:id="lblX" layoutX="27.0" layoutY="57.0" text="X" />
+                                    <Label fx:id="lblY" layoutX="28.0" layoutY="87.0" text="Y" />
+                                    <Label layoutX="132.0" layoutY="57.0" text="X" />
+                                    <Label layoutX="132.0" layoutY="87.0" text="Y" />
+                                    <TextField fx:id="txtPX" layoutX="149.0" layoutY="53.0" onAction="#handleCrearPunto" prefHeight="25.0" prefWidth="53.0" />
+                                    <TextField fx:id="txtPY" layoutX="149.0" layoutY="85.0" onAction="#handleCrearPunto" prefHeight="25.0" prefWidth="53.0" />
+                                    <Label layoutX="54.0" layoutY="21.0" text="Vector" />
+                                    <Label layoutX="160.0" layoutY="21.0" text="Punto" />
                                  </children>
                               </Pane>
                               <Button fx:id="btnAngulo" layoutX="481.0" layoutY="113.0" mnemonicParsing="false" onAction="#handleAngulo" text="Calcular angulo" />
@@ -66,14 +72,14 @@
                               <TextField fx:id="txtMultEscalar" layoutX="600.0" layoutY="193.0" onAction="#handleMultEscalar" prefHeight="25.0" prefWidth="133.0" />
                               <TextField fx:id="txtAngulo" layoutX="600.0" layoutY="113.0" onAction="#handleAngulo" prefHeight="25.0" prefWidth="133.0" />
                               <TextField fx:id="txtProyeccion" layoutX="600.0" layoutY="151.0" onAction="#handleProyeccion" prefHeight="25.0" prefWidth="133.0" />
-                              <Button fx:id="btnVaPunto" layoutX="206.0" layoutY="193.0" mnemonicParsing="false" text="vector a punto" />
-                              <Button fx:id="btnTPunto" layoutX="204.0" layoutY="235.0" mnemonicParsing="false" text="trasladar punto" />
-                              <Button fx:id="btnDaPunto" layoutX="478.0" layoutY="235.0" mnemonicParsing="false" text="distancia de punto " />
-                              <TextField fx:id="txtVaPunto" layoutX="331.0" layoutY="193.0" prefHeight="25.0" prefWidth="133.0" />
+                              <Button fx:id="btnVaPunto" layoutX="206.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleVectorHastaPunto" text="vector a punto" />
+                              <Button fx:id="btnTPunto" layoutX="204.0" layoutY="235.0" mnemonicParsing="false" onAction="#handleTrasladarPunto" text="trasladar punto" />
+                              <Button fx:id="btnDaPunto" layoutX="478.0" layoutY="235.0" mnemonicParsing="false" onAction="#handleCalcularDistancia" text="distancia de punto " />
+                              <TextField fx:id="txtVaPunto" layoutX="331.0" layoutY="193.0" onAction="#handleVectorHastaPunto" prefHeight="25.0" prefWidth="133.0" />
                               <ComboBox fx:id="cBoxPuntoB" layoutX="32.0" layoutY="235.0" prefWidth="150.0" />
                               <Label fx:id="lblPuntoB" layoutX="33.0" layoutY="197.0" text="Seleccionar punto" />
-                              <TextField fx:id="txtTPunto" layoutX="324.0" layoutY="235.0" prefHeight="25.0" prefWidth="133.0" />
-                              <TextField fx:id="txtDaPunto" layoutX="600.0" layoutY="235.0" prefHeight="25.0" prefWidth="133.0" />
+                              <TextField fx:id="txtTPunto" layoutX="324.0" layoutY="235.0" onAction="#handleTrasladarPunto" prefHeight="25.0" prefWidth="133.0" />
+                              <TextField fx:id="txtDaPunto" layoutX="600.0" layoutY="235.0" onDragDetected="#handleCalcularDistancia" prefHeight="25.0" prefWidth="133.0" />
                               <TextField fx:id="txtError" layoutX="764.0" layoutY="187.0" prefHeight="89.0" prefWidth="240.0" />
                            </children>
                         </Pane>

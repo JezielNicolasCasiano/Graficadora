@@ -24,6 +24,8 @@ public class GraficadoraControler implements Initializable {
     private Pane containerPane;
     @FXML private TextField txtX;
     @FXML private TextField txtY;
+    @FXML private TextField txtPX;
+    @FXML private TextField txtPY;
     @FXML private TextField txtSumar;
     @FXML private TextField txtRestar;
     @FXML private TextField txtPPunto;
@@ -46,6 +48,71 @@ public class GraficadoraControler implements Initializable {
     private final ObservableList <Punto2D> listaPuntos = FXCollections.observableArrayList();
     private double escalarActual = 1.0;
 
+
+    @FXML
+    private void handleCrearPunto(){
+
+        try {
+
+            double x = Double.parseDouble(txtPX.getText());
+            double y = Double.parseDouble(txtPY.getText());
+
+            Punto2D punto = new Punto2D(x,y);
+            listaPuntos.add(punto);
+
+            txtX.clear();
+            txtY.clear();
+            if(cBoxPuntoA.getValue() == null) cBoxPuntoA.setValue(punto);
+            if (cBoxPuntoB.getValue() == null) cBoxPuntoB.setValue(punto);
+
+        }catch (NumberFormatException e){
+
+        txtError.setText("error al ingresar coordenadas");
+
+        }
+
+    }
+    @FXML
+    private void handleCalcularDistancia(){
+
+    Punto2D pA = cBoxPuntoA.getValue();
+    Punto2D pB = cBoxPuntoB.getValue();
+    if(validarPuntos(pA,pB)){
+
+        double res = pA.obtenerDistanciaPunto(pB);
+        txtDaPunto.setText(String.valueOf(res));
+
+    }
+    }
+    @FXML
+    private void handleVectorHastaPunto(){
+
+        Punto2D pA = cBoxPuntoA.getValue();
+        Punto2D pB = cBoxPuntoB.getValue();
+        if (validarPuntos(pA,pB)){
+
+            Vector2D vector = pA.vectorHastaPunto(pB);
+            txtVaPunto.setText(vector.toString());
+
+        }
+
+    }
+@FXML
+private void handleTrasladarPunto(){
+
+Punto2D pA = cBoxPuntoA.getValue();
+Vector2D vA = cboxVectorA.getValue();
+
+if(pA == null || vA==null){
+
+    txtError.setText("selecciona un punto y un vector");
+
+}
+    assert pA != null;
+    assert vA != null;
+    Punto2D puntoTrasladado = pA.trasladarPunto(vA);
+    txtTPunto.setText(puntoTrasladado.toString());
+}
     @FXML
     private void handleCrearVector(){
 
@@ -186,38 +253,28 @@ public class GraficadoraControler implements Initializable {
         if(validarSeleccionIndividual(vA)){
 
             try{
-
                 double k = Double.parseDouble(txtEscalar.getText());
                 Vector2D res = vA.multEscalar(k);
                 txtMultEscalar.setText(res.toString());
-
             }catch (NumberFormatException e){
-
                 txtError.setText("Error al ingresar escalar");
-
             }
-
         }
-
     }
     @FXML
     private void handleGuardarEscalar(){
     try {
         this.escalarActual = Double.parseDouble(txtEscalar.getText());
     }catch (NumberFormatException e){
-
         txtError.setText("Error al guardar escalar");
-
     }
     }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
     cboxVectorA.setItems(listaVectores);
     cBoxVectorB.setItems(listaVectores);
-
-
+    cBoxPuntoA.setItems(listaPuntos);
+    cBoxPuntoB.setItems(listaPuntos);
     }
 
     private boolean validarSeleccion(Vector2D vA, Vector2D vB) {
@@ -232,6 +289,14 @@ public class GraficadoraControler implements Initializable {
         txtError.setText("");
         if (v == null) {
             txtError.setText("Error: Selecciona un vector en la lista Vector A.");
+            return false;
+        }
+        return true;
+    }
+    private boolean validarPuntos(Punto2D pA, Punto2D pB) {
+        txtError.setText("");
+        if (pA == null || pB == null) {
+            txtError.setText("Error: Selecciona dos puntos de las listas.");
             return false;
         }
         return true;
