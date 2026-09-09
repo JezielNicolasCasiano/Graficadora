@@ -38,7 +38,7 @@ public class GraficadoraControler implements Initializable {
     @FXML private TextField txtDaPunto;
     @FXML private TextField txtError;
     @FXML private ComboBox <Vector2D> cboxVectorA;
-    @FXML private ComboBox <Vector2D>cboxVectorB;
+    @FXML private ComboBox <Vector2D>cBoxVectorB;
     @FXML private ComboBox <Punto2D> cBoxPuntoA;
     @FXML private ComboBox <Punto2D> cBoxPuntoB;
 
@@ -59,7 +59,7 @@ public class GraficadoraControler implements Initializable {
             txtX.clear();
             txtY.clear();
             if(cboxVectorA.getValue() == null) cboxVectorA.setValue(vector);
-            if(cboxVectorB.getValue() == null) cboxVectorB.setValue(vector);
+            if(cBoxPuntoA.getValue() == null) cBoxVectorB.setValue(vector);
 
         }catch (NumberFormatException e){
 
@@ -73,7 +73,7 @@ public class GraficadoraControler implements Initializable {
     private void handleSumar(){
 
         Vector2D vA = cboxVectorA.getValue();
-        Vector2D vB = cboxVectorB.getValue();
+        Vector2D vB = cBoxVectorB.getValue();
 
         if(validarSeleccion(vA,vB)){
 
@@ -87,7 +87,7 @@ public class GraficadoraControler implements Initializable {
     private void handleRestar(){
 
         Vector2D vA = cboxVectorA.getValue();
-        Vector2D vB = cboxVectorB.getValue();
+        Vector2D vB = cBoxVectorB.getValue();
         if(validarSeleccion(vA,vB)){
 
             Vector2D res = vA.restar(vB);
@@ -101,7 +101,7 @@ public class GraficadoraControler implements Initializable {
     private void handleProductoPunto(){
 
         Vector2D vA = cboxVectorA.getValue();
-        Vector2D vB = cboxVectorB.getValue();
+        Vector2D vB = cBoxVectorB.getValue();
         if(validarSeleccion(vA,vB)){
 
             double res = vA.obtenerProductoPunto(vB);
@@ -115,7 +115,7 @@ public class GraficadoraControler implements Initializable {
     private void handleProyeccion() {
 
         Vector2D vA = cboxVectorA.getValue();
-        Vector2D vB = cboxVectorB.getValue();
+        Vector2D vB = cBoxVectorB.getValue();
         if (validarSeleccion(vA, vB)) {
 
             try {
@@ -135,7 +135,7 @@ public class GraficadoraControler implements Initializable {
     private void handleAngulo(){
 
         Vector2D vA = cboxVectorA.getValue();
-        Vector2D vB = cboxVectorB.getValue();
+        Vector2D vB = cBoxVectorB.getValue();
 
         if (validarSeleccion(vA,vB)){
 
@@ -203,7 +203,7 @@ public class GraficadoraControler implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
     cboxVectorA.setItems(listaVectores);
-    cboxVectorB.setItems(listaVectores);
+    cBoxVectorB.setItems(listaVectores);
 
 
     }
