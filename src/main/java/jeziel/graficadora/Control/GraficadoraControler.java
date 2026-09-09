@@ -65,8 +65,8 @@ public class GraficadoraControler implements Initializable {
                 planoCartesianoController.agregarPunto2D(x, y);
             }
 
-            txtX.clear();
-            txtY.clear();
+            txtPX.clear();
+            txtPY.clear();
             if(cBoxPuntoA.getValue() == null) cBoxPuntoA.setValue(punto);
             if (cBoxPuntoB.getValue() == null) cBoxPuntoB.setValue(punto);
 

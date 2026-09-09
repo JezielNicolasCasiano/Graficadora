@@ -17,8 +17,9 @@ public class planoCartesianoController {
     private GraphicsContext g; //Clase ya implementada para modelar un sistema de coordenadas en 2D
     private Plano planoMatematico;
     private static final double PIXELES_POR_DIVISION = 80;
-    private static final double pixelesPunto = 10;
+    private static final double pixelesPunto = 5;
     private static final double pasosEscala = 5;
+    private static final double ESCALA_MINIMA = 1;
     private double escala = 50;
     private double origenX;
     private double origenY;
@@ -72,38 +73,46 @@ public class planoCartesianoController {
         }
     }
 
+    private boolean fueraDeRango(double xPixel, double yPixel){
+        return xPixel < 0 || xPixel > lienzo.getWidth() || yPixel < 0 || yPixel > lienzo.getHeight();
+    }
+
     private void dibujarPunto2D(double ordenadaX, double ordenadaY){
         double ordenadaXPixel = xmatematicoAPixelX(ordenadaX);
         double ordenadaYPixel = ymatematicoAPixelY(ordenadaY);
-        if(ordenadaXPixel>lienzo.getWidth() || ordenadaYPixel> lienzo.getHeight() || (ordenadaXPixel<0 && escala > 0) || (ordenadaYPixel<0 && escala > 0)){
-            escala = escala - pasosEscala;
+
+        while (fueraDeRango(ordenadaXPixel, ordenadaYPixel) && escala > ESCALA_MINIMA){
+            escala = Math.max(escala - pasosEscala, ESCALA_MINIMA);
             dibujar();
-            if (escala > 1){
-                dibujarPunto2D(ordenadaX, ordenadaY);
-            }
-        }else if(ordenadaXPixel<lienzo.getWidth() && ordenadaYPixel< lienzo.getHeight() && (ordenadaXPixel>0) && (ordenadaYPixel>0)){
+            ordenadaXPixel = xmatematicoAPixelX(ordenadaX);
+            ordenadaYPixel = ymatematicoAPixelY(ordenadaY);
+        }
+
+        if (!fueraDeRango(ordenadaXPixel, ordenadaYPixel)){
             g.setFill(Color.BLACK); //¿Tal vez poner para que vaya cambiando de color conforme los puntos que se agreguen?
             g.fillOval(ordenadaXPixel - pixelesPunto, ordenadaYPixel - pixelesPunto, 2*pixelesPunto, 2*pixelesPunto);
         }else{
-            System.out.println("No se puede representar, supera la esclaa 1:1");//Temporal, despues agregar una alerta
+            System.out.println("No se puede representar, supera la escala minima permitida");//Temporal, despues agregar una alerta
         }
     }
 
     private void dibujarVector2D(double ordenadaX, double ordenadaY){
         double ordenadaXPixel = xmatematicoAPixelX(ordenadaX);
         double ordenadaYPixel = ymatematicoAPixelY(ordenadaY);
-        if (ordenadaXPixel>lienzo.getWidth() || ordenadaYPixel> lienzo.getHeight() || (ordenadaXPixel<0 && escala > 0) || (ordenadaYPixel<0 && escala > 0)){
-            escala = escala - pasosEscala;
+
+        while (fueraDeRango(ordenadaXPixel, ordenadaYPixel) && escala > ESCALA_MINIMA){
+            escala = Math.max(escala - pasosEscala, ESCALA_MINIMA);
             dibujar();
-            if (escala > 1){
-                dibujarVector2D(ordenadaX, ordenadaY);
-            }
-        }else if (ordenadaXPixel<lienzo.getWidth() && ordenadaYPixel<lienzo.getHeight()  && (ordenadaXPixel>0 ) && (ordenadaYPixel>0)){
+            ordenadaXPixel = xmatematicoAPixelX(ordenadaX);
+            ordenadaYPixel = ymatematicoAPixelY(ordenadaY);
+        }
+
+        if (!fueraDeRango(ordenadaXPixel, ordenadaYPixel)){
             g.setStroke(Color.BLACK); //¿Tal vez poner para que vaya cambiando de color conforme los puntos que se agreguen?
             g.setLineWidth(1);
             g.strokeLine(origenX, origenY, ordenadaXPixel, ordenadaYPixel);
         }else {
-            System.out.println("No se puede representar, supera la esclaa 1:1");//Temporal, despues agregar una alerta
+            System.out.println("No se puede representar, supera la escala minima permitida");//Temporal, despues agregar una alerta
         }
     }
 
