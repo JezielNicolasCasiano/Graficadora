@@ -107,33 +107,6 @@ public class planoCartesianoController {
         }
     }
 
-    private void dibujarCabezaFlecha(double ordenadaX, double ordenadaY) {
-        if (ordenadaX == 0 && ordenadaY == 0) return;
-        double anguloVector = Math.atan2(ordenadaY, ordenadaX);
-        double longitudCabeza = 0.35; //Longitud de las aletas me da pereza hacerlo dinamico xdd
-        double anguloApertura = Math.toRadians(45);
-        double anguloAleta1 = anguloVector + Math.PI - anguloApertura; // 180° - 45°
-        double anguloAleta2 = anguloVector + Math.PI + anguloApertura; // 180° + 45°
-
-        double xAleta1 = ordenadaX + longitudCabeza * Math.cos(anguloAleta1);
-        double yAleta1 = ordenadaY + longitudCabeza * Math.sin(anguloAleta1);
-
-        double xAleta2 = ordenadaX + longitudCabeza * Math.cos(anguloAleta2);
-        double yAleta2 = ordenadaY + longitudCabeza * Math.sin(anguloAleta2);
-
-        double xPuntaPixel = xmatematicoAPixelX(ordenadaX);
-        double yPuntaPixel = ymatematicoAPixelY(ordenadaY);
-
-        double xAleta1Pixel = xmatematicoAPixelX(xAleta1);
-        double yAleta1Pixel = ymatematicoAPixelY(yAleta1);
-
-        double xAleta2Pixel = xmatematicoAPixelX(xAleta2);
-        double yAleta2Pixel = ymatematicoAPixelY(yAleta2);
-
-        g.strokeLine(xPuntaPixel, yPuntaPixel, xAleta1Pixel, yAleta1Pixel);
-        g.strokeLine(xPuntaPixel, yPuntaPixel, xAleta2Pixel, yAleta2Pixel);
-    }
-
     //Metodos para agregar puntos y vectores al plano
     public void agregarPunto2D(double ordenadaX, double ordenadaY){
         planoMatematico.crearPunto2D(ordenadaX, ordenadaY);
@@ -145,7 +118,6 @@ public class planoCartesianoController {
         planoMatematico.crearVector2D(ordenadaX, ordenadaY);
         //Algoritmo para que se vuelva a dibujar
         dibujarVector2D(ordenadaX, ordenadaY);
-        dibujarCabezaFlecha(ordenadaX,ordenadaY);
     }
 
     //Metodos auxiliares para transformar coordenadas cartesianas a Pixeles
