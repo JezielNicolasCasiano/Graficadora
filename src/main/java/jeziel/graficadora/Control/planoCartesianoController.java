@@ -34,8 +34,8 @@ public class planoCartesianoController {
         lienzo.widthProperty().bind(contenedorPrincipal.widthProperty());
         lienzo.heightProperty().bind(contenedorPrincipal.heightProperty());
 
-        lienzo.widthProperty().addListener((o, a, b) -> dibujar()); //Como lienzo es un canvas es necesario añadir listener para escuchar el cambio de posicion cuando se hace zoom out o in
-        lienzo.heightProperty().addListener((o, a, b) -> dibujar());
+        lienzo.widthProperty().addListener((o, a, b) -> redibujarAjustando()); //Como lienzo es un canvas es necesario añadir listener para escuchar el cambio de posicion cuando se hace zoom out o in
+        lienzo.heightProperty().addListener((o, a, b) -> redibujarAjustando());
 
         dibujar();
     }
@@ -77,43 +77,61 @@ public class planoCartesianoController {
         return xPixel < 0 || xPixel > lienzo.getWidth() || yPixel < 0 || yPixel > lienzo.getHeight();
     }
 
+    //Comprueba si unas coordenadas cabrian en el lienzo con una escala dada, SIN modificar ni dibujar nada
+    private boolean cabeConEscala(double ordenadaX, double ordenadaY, double escalaCandidata){
+        double xPixel = (ordenadaX * escalaCandidata) + (lienzo.getWidth() / 2);
+        double yPixel = (lienzo.getHeight() / 2) - (ordenadaY * escalaCandidata);
+        return !fueraDeRango(xPixel, yPixel);
+    }
+
+    //Busca la escala con la que unas coordenadas si caben. Devuelve -1 si no caben ni con la escala minima.
+    private double calcularEscalaPara(double ordenadaX, double ordenadaY){
+        double escalaCandidata = escala;
+        while (!cabeConEscala(ordenadaX, ordenadaY, escalaCandidata) && escalaCandidata > ESCALA_MINIMA){
+            escalaCandidata = Math.max(escalaCandidata - pasosEscala, ESCALA_MINIMA);
+        }
+        return cabeConEscala(ordenadaX, ordenadaY, escalaCandidata) ? escalaCandidata : -1;
+    }
+
+    //Baja la escala lo necesario para que todo lo que ya esta en el plano siga cabiendo
+    private void ajustarEscalaAlContenido(){
+        for (int i = 0; i < planoMatematico.getPuntos2D().size(); i++){
+            double necesaria = calcularEscalaPara(planoMatematico.getPuntos2D().get(i).getOrdenadaX(),
+                    planoMatematico.getPuntos2D().get(i).getOrdenadaY());
+            if (necesaria > 0) escala = necesaria;
+        }
+        for (int i = 0; i < planoMatematico.getVectores2D().size(); i++){
+            double necesaria = calcularEscalaPara(planoMatematico.getVectores2D().get(i).getVectorX(),
+                    planoMatematico.getVectores2D().get(i).getVectorY());
+            if (necesaria > 0) escala = necesaria;
+        }
+    }
+
+    //Reajusta el zoom a lo que ya hay en el plano y vuelve a dibujar (al cambiar el tamaño del lienzo)
+    private void redibujarAjustando(){
+        ajustarEscalaAlContenido();
+        dibujar();
+    }
+
+    //Estos dos metodos SOLO dibujan: no tocan la escala ni llaman a dibujar(), asi no hay recursion
     private void dibujarPunto2D(double ordenadaX, double ordenadaY){
         double ordenadaXPixel = xmatematicoAPixelX(ordenadaX);
         double ordenadaYPixel = ymatematicoAPixelY(ordenadaY);
+        if (fueraDeRango(ordenadaXPixel, ordenadaYPixel)) return;
 
-        while (fueraDeRango(ordenadaXPixel, ordenadaYPixel) && escala > ESCALA_MINIMA){
-            escala = Math.max(escala - pasosEscala, ESCALA_MINIMA);
-            dibujar();
-            ordenadaXPixel = xmatematicoAPixelX(ordenadaX);
-            ordenadaYPixel = ymatematicoAPixelY(ordenadaY);
-        }
-
-        if (!fueraDeRango(ordenadaXPixel, ordenadaYPixel)){
-            g.setFill(Color.BLACK); //¿Tal vez poner para que vaya cambiando de color conforme los puntos que se agreguen?
-            g.fillOval(ordenadaXPixel - pixelesPunto, ordenadaYPixel - pixelesPunto, 2*pixelesPunto, 2*pixelesPunto);
-        }else{
-            System.out.println("No se puede representar, supera la escala minima permitida");//Temporal, despues agregar una alerta
-        }
+        g.setFill(Color.BLACK); //¿Tal vez poner para que vaya cambiando de color conforme los puntos que se agreguen?
+        g.fillOval(ordenadaXPixel - pixelesPunto, ordenadaYPixel - pixelesPunto, 2*pixelesPunto, 2*pixelesPunto);
     }
 
     private void dibujarVector2D(double ordenadaX, double ordenadaY){
         double ordenadaXPixel = xmatematicoAPixelX(ordenadaX);
         double ordenadaYPixel = ymatematicoAPixelY(ordenadaY);
+        if (fueraDeRango(ordenadaXPixel, ordenadaYPixel)) return;
 
-        while (fueraDeRango(ordenadaXPixel, ordenadaYPixel) && escala > ESCALA_MINIMA){
-            escala = Math.max(escala - pasosEscala, ESCALA_MINIMA);
-            dibujar();
-            ordenadaXPixel = xmatematicoAPixelX(ordenadaX);
-            ordenadaYPixel = ymatematicoAPixelY(ordenadaY);
-        }
-
-        if (!fueraDeRango(ordenadaXPixel, ordenadaYPixel)){
-            g.setStroke(Color.BLACK); //¿Tal vez poner para que vaya cambiando de color conforme los puntos que se agreguen?
-            g.setLineWidth(1);
-            g.strokeLine(origenX, origenY, ordenadaXPixel, ordenadaYPixel);
-        }else {
-            System.out.println("No se puede representar, supera la escala minima permitida");//Temporal, despues agregar una alerta
-        }
+        g.setStroke(Color.BLACK); //¿Tal vez poner para que vaya cambiando de color conforme los puntos que se agreguen?
+        g.setLineWidth(1);
+        g.strokeLine(origenX, origenY, ordenadaXPixel, ordenadaYPixel);
+        dibujarCabezaFlecha(ordenadaX, ordenadaY);
     }
 
     private void dibujarCabezaFlecha(double ordenadaX, double ordenadaY) {
@@ -143,18 +161,27 @@ public class planoCartesianoController {
         g.strokeLine(xPuntaPixel, yPuntaPixel, xAleta2Pixel, yAleta2Pixel);
     }
 
-    //Metodos para agregar puntos y vectores al plano
-    public void agregarPunto2D(double ordenadaX, double ordenadaY){
+    //Metodos para agregar puntos y vectores al plano.
+    //Primero se calcula si cabe y con que escala; solo si cabe se guarda y se dibuja.
+    //Asi, cuando no se puede representar, la escala nunca llego a modificarse y no hay que restaurarla.
+    public boolean agregarPunto2D(double ordenadaX, double ordenadaY){
+        double escalaNecesaria = calcularEscalaPara(ordenadaX, ordenadaY);
+        if (escalaNecesaria < 0) return false; //no cabe ni con la escala minima: no se cambia nada
+
         planoMatematico.crearPunto2D(ordenadaX, ordenadaY);
-        //Algoritmo para que se vuelva a dibujar
-        dibujarPunto2D(ordenadaX,ordenadaY);
+        escala = escalaNecesaria;
+        dibujar();
+        return true;
     }
 
-    public void agregarVector2D(double ordenadaX, double ordenadaY){
+    public boolean agregarVector2D(double ordenadaX, double ordenadaY){
+        double escalaNecesaria = calcularEscalaPara(ordenadaX, ordenadaY);
+        if (escalaNecesaria < 0) return false; //no cabe ni con la escala minima: no se cambia nada
+
         planoMatematico.crearVector2D(ordenadaX, ordenadaY);
-        //Algoritmo para que se vuelva a dibujar
-        dibujarVector2D(ordenadaX, ordenadaY);
-        dibujarCabezaFlecha(ordenadaX,ordenadaY);
+        escala = escalaNecesaria;
+        dibujar();
+        return true;
     }
 
     //Metodos auxiliares para transformar coordenadas cartesianas a Pixeles

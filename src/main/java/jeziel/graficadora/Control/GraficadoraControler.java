@@ -58,12 +58,14 @@ public class GraficadoraControler implements Initializable {
             double x = Double.parseDouble(txtPX.getText());
             double y = Double.parseDouble(txtPY.getText());
 
+            if (planoCartesianoController != null && !planoCartesianoController.agregarPunto2D(x, y)) {
+                txtError.setText("El punto queda demasiado lejos para representarlo");
+                return;
+            }
+
             Punto2D punto = new Punto2D(x,y);
             listaPuntos.add(punto);
-
-            if (planoCartesianoController != null) {
-                planoCartesianoController.agregarPunto2D(x, y);
-            }
+            txtError.setText("");
 
             txtPX.clear();
             txtPY.clear();
@@ -126,12 +128,14 @@ if(pA == null || vA==null){
             double x = Double.parseDouble(txtX.getText());
             double y = Double.parseDouble(txtY.getText());
 
+            if (planoCartesianoController != null && !planoCartesianoController.agregarVector2D(x, y)) {
+                txtError.setText("El vector queda demasiado lejos para representarlo");
+                return;
+            }
+
             Vector2D vector = new Vector2D(x,y);
             listaVectores.add(vector);
-
-            if (planoCartesianoController != null) {
-                planoCartesianoController.agregarVector2D(x, y);
-            }
+            txtError.setText("");
 
             txtX.clear();
             txtY.clear();
