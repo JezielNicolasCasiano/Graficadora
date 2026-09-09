@@ -8,58 +8,79 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="696.0" prefWidth="902.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jeziel.graficadora.Control.GraficadoraControler">
+<AnchorPane prefHeight="791.0" prefWidth="1050.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jeziel.graficadora.Control.GraficadoraControler">
    <children>
-      <Pane id="PnMain" fx:id="containerPane" layoutY="2.0" prefHeight="696.0" prefWidth="942.0">
+      <Pane id="PnMain" fx:id="containerPane" layoutY="2.0" prefHeight="789.0" prefWidth="1055.0">
          <children>
-            <SplitPane prefHeight="496.0" prefWidth="942.0">
+            <SplitPane prefHeight="496.0" prefWidth="1055.0">
                <items>
-                  <Pane prefHeight="200.0" prefWidth="200.0">
+                  <Pane prefHeight="494.0" prefWidth="1016.0">
                      <children>
-                        <SplitPane dividerPositions="0.29797979797979796" layoutY="-1.0" prefHeight="496.0" prefWidth="940.0">
+                        <SplitPane dividerPositions="0.29797979797979796" layoutY="-1.0" prefHeight="496.0" prefWidth="1055.0">
                           <items>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="682.0" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="392.0" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="728.0" />
                           </items>
                         </SplitPane>
                      </children>
                   </Pane>
                </items>
             </SplitPane>
-            <SplitPane layoutX="8.0" layoutY="496.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="934.0">
+            <SplitPane layoutX="-4.0" layoutY="496.0" orientation="VERTICAL" prefHeight="293.0" prefWidth="1058.0">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="96.0" prefWidth="165.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="291.0" prefWidth="1046.0">
                      <children>
-                        <Pane layoutX="-8.0" layoutY="-1.0" prefHeight="200.0" prefWidth="748.0">
+                        <Pane layoutX="7.0" layoutY="-1.0" prefHeight="293.0" prefWidth="1055.0">
                            <children>
-                              <ComboBox layoutX="32.0" layoutY="40.0" prefWidth="150.0" />
-                              <ComboBox layoutX="32.0" layoutY="100.0" prefWidth="150.0" />
-                              <Label layoutX="32.0" layoutY="14.0" text="Selccionar vector" />
-                              <ComboBox layoutX="32.0" layoutY="151.0" prefWidth="150.0" />
-                              <Label layoutX="32.0" layoutY="73.0" text="Seleccionar vector" />
-                              <Label layoutX="32.0" layoutY="125.0" text="Seleccionar punto" />
-                              <Button layoutX="203.0" layoutY="28.0" mnemonicParsing="false" text="sumar vectores" />
-                              <Button layoutX="203.0" layoutY="69.0" mnemonicParsing="false" text="Restar vectores" />
-                              <Button layoutX="203.0" layoutY="113.0" mnemonicParsing="false" text="producto punto" />
-                              <Button layoutX="203.0" layoutY="152.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="normalizar vector" />
-                              <Button layoutX="477.0" layoutY="28.0" mnemonicParsing="false" text="Calcular magnitud" />
-                              <Label layoutX="492.0" layoutY="73.0" text="Ingresar escalar" />
-                              <TextField layoutX="492.0" layoutY="100.0" />
-                              <TextField layoutX="336.0" layoutY="28.0" prefHeight="25.0" prefWidth="124.0" />
-                              <TextField layoutX="332.0" layoutY="69.0" prefHeight="25.0" prefWidth="133.0" />
-                              <TextField layoutX="332.0" layoutY="113.0" prefHeight="25.0" prefWidth="133.0" />
-                              <TextField layoutX="332.0" layoutY="151.0" prefHeight="25.0" prefWidth="133.0" />
-                              <TextField layoutX="599.0" layoutY="28.0" prefHeight="25.0" prefWidth="133.0" />
-                           </children>
-                        </Pane>
-                        <Pane layoutX="739.0" layoutY="-1.0" prefHeight="200.0" prefWidth="193.0">
-                           <children>
-                              <Button layoutX="32.0" layoutY="124.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="133.0" text="Crear Vector" />
-                              <Button layoutX="32.0" layoutY="161.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="133.0" text="Crear punto" />
-                              <TextField layoutX="107.0" layoutY="67.0" prefHeight="25.0" prefWidth="72.0" />
-                              <TextField layoutX="107.0" layoutY="30.0" prefHeight="25.0" prefWidth="72.0" />
-                              <Label layoutX="14.0" layoutY="34.0" text="Coordenada X" />
-                              <Label layoutX="14.0" layoutY="71.0" text="Coordenada Y" />
+                              <ComboBox fx:id="cboxVectorA" layoutX="32.0" layoutY="40.0" prefWidth="150.0" />
+                              <ComboBox fx:id="cBoxVectorB" layoutX="32.0" layoutY="100.0" prefWidth="150.0" />
+                              <Label fx:id="lblVectorA" layoutX="32.0" layoutY="14.0" text="Selccionar vector" />
+                              <ComboBox fx:id="cBoxPuntoA" layoutX="32.0" layoutY="164.0" prefWidth="150.0" />
+                              <Label fx:id="lblVectorB" layoutX="32.0" layoutY="73.0" text="Seleccionar vector" />
+                              <Label fx:id="lblPuntoA" layoutX="33.0" layoutY="130.0" text="Seleccionar punto" />
+                              <Button fx:id="btnSumar" layoutX="203.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleSumar" text="sumar vectores" />
+                              <Button fx:id="btnRestar" layoutX="203.0" layoutY="69.0" mnemonicParsing="false" onAction="#handleRestar" text="Restar vectores" />
+                              <Button fx:id="btnPPunto" layoutX="203.0" layoutY="113.0" mnemonicParsing="false" onAction="#handleProductoPunto" text="producto punto" />
+                              <Button fx:id="btnNormalizar" layoutX="203.0" layoutY="152.0" mnemonicParsing="false" onAction="#handleNormalizar" prefHeight="25.0" prefWidth="112.0" text="normalizar vector" />
+                              <Button fx:id="btnMagnitud" layoutX="473.0" layoutY="69.0" mnemonicParsing="false" onAction="#handleMagnitud" text="Calcular magnitud" />
+                              <TextField fx:id="txtMagnitud" layoutX="600.0" layoutY="69.0" onAction="#handleMagnitud" prefHeight="25.0" prefWidth="133.0" />
+                              <TextField fx:id="txtSumar" layoutX="336.0" layoutY="28.0" onAction="#handleSumar" prefHeight="25.0" prefWidth="124.0" />
+                              <TextField fx:id="txtRestar" layoutX="332.0" layoutY="69.0" onAction="#handleRestar" prefHeight="25.0" prefWidth="133.0" />
+                              <TextField fx:id="txtPPunto" layoutX="332.0" layoutY="113.0" onAction="#handleProductoPunto" prefHeight="25.0" prefWidth="133.0" />
+                              <TextField fx:id="txtNormalizar" layoutX="332.0" layoutY="151.0" onAction="#handleNormalizar" prefHeight="25.0" prefWidth="133.0" />
+                              <TextField fx:id="txtEscalar" layoutX="599.0" layoutY="28.0" onAction="#handleGuardarEscalar" prefHeight="25.0" prefWidth="133.0" />
+                              <Pane layoutX="753.0" layoutY="3.0" prefHeight="194.0" prefWidth="263.0">
+                                 <children>
+                                    <Button fx:id="btnVector" layoutX="132.0" layoutY="134.0" mnemonicParsing="false" onAction="#handleCrearVector" prefHeight="25.0" prefWidth="118.0" text="Crear Vector" />
+                                    <Button fx:id="btnPunto" layoutX="21.0" layoutY="134.0" mnemonicParsing="false" onAction="#handleCrearPunto" prefHeight="25.0" prefWidth="100.0" text="Crear punto" />
+                                    <TextField fx:id="txtY" layoutX="59.0" layoutY="85.0" onAction="#handleCrearVector" prefHeight="25.0" prefWidth="53.0" />
+                                    <TextField fx:id="txtX" layoutX="59.0" layoutY="53.0" onAction="#handleCrearVector" prefHeight="25.0" prefWidth="53.0" />
+                                    <Label fx:id="lblX" layoutX="27.0" layoutY="57.0" text="X" />
+                                    <Label fx:id="lblY" layoutX="28.0" layoutY="87.0" text="Y" />
+                                    <Label layoutX="132.0" layoutY="57.0" text="X" />
+                                    <Label layoutX="132.0" layoutY="87.0" text="Y" />
+                                    <TextField fx:id="txtPX" layoutX="149.0" layoutY="53.0" onAction="#handleCrearPunto" prefHeight="25.0" prefWidth="53.0" />
+                                    <TextField fx:id="txtPY" layoutX="149.0" layoutY="85.0" onAction="#handleCrearPunto" prefHeight="25.0" prefWidth="53.0" />
+                                    <Label layoutX="54.0" layoutY="21.0" text="Vector" />
+                                    <Label layoutX="160.0" layoutY="21.0" text="Punto" />
+                                 </children>
+                              </Pane>
+                              <Button fx:id="btnAngulo" layoutX="481.0" layoutY="113.0" mnemonicParsing="false" onAction="#handleAngulo" text="Calcular angulo" />
+                              <Button fx:id="btnProyeccion" layoutX="470.0" layoutY="151.0" mnemonicParsing="false" onAction="#handleProyeccion" text="obtener proyeccion" />
+                              <Button fx:id="btnMulEscalar" layoutX="481.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleMultEscalar" text="Multiplicar escalar" />
+                              <Button fx:id="btnEscalar" layoutX="480.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleGuardarEscalar" text="Ingresar escalar" />
+                              <TextField fx:id="txtMultEscalar" layoutX="600.0" layoutY="193.0" onAction="#handleMultEscalar" prefHeight="25.0" prefWidth="133.0" />
+                              <TextField fx:id="txtAngulo" layoutX="600.0" layoutY="113.0" onAction="#handleAngulo" prefHeight="25.0" prefWidth="133.0" />
+                              <TextField fx:id="txtProyeccion" layoutX="600.0" layoutY="151.0" onAction="#handleProyeccion" prefHeight="25.0" prefWidth="133.0" />
+                              <Button fx:id="btnVaPunto" layoutX="206.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleVectorHastaPunto" text="vector a punto" />
+                              <Button fx:id="btnTPunto" layoutX="204.0" layoutY="235.0" mnemonicParsing="false" onAction="#handleTrasladarPunto" text="trasladar punto" />
+                              <Button fx:id="btnDaPunto" layoutX="478.0" layoutY="235.0" mnemonicParsing="false" onAction="#handleCalcularDistancia" text="distancia de punto " />
+                              <TextField fx:id="txtVaPunto" layoutX="331.0" layoutY="193.0" onAction="#handleVectorHastaPunto" prefHeight="25.0" prefWidth="133.0" />
+                              <ComboBox fx:id="cBoxPuntoB" layoutX="32.0" layoutY="235.0" prefWidth="150.0" />
+                              <Label fx:id="lblPuntoB" layoutX="33.0" layoutY="197.0" text="Seleccionar punto" />
+                              <TextField fx:id="txtTPunto" layoutX="324.0" layoutY="235.0" onAction="#handleTrasladarPunto" prefHeight="25.0" prefWidth="133.0" />
+                              <TextField fx:id="txtDaPunto" layoutX="600.0" layoutY="235.0" onDragDetected="#handleCalcularDistancia" prefHeight="25.0" prefWidth="133.0" />
+                              <TextField fx:id="txtError" layoutX="764.0" layoutY="187.0" prefHeight="89.0" prefWidth="240.0" />
                            </children>
                         </Pane>
                      </children>
