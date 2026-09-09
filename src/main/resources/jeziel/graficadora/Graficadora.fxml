@@ -38,17 +38,17 @@
                               <ComboBox fx:id="cBoxPuntoA" layoutX="32.0" layoutY="164.0" prefWidth="150.0" />
                               <Label fx:id="lblVectorB" layoutX="32.0" layoutY="73.0" text="Seleccionar vector" />
                               <Label fx:id="lblPuntoA" layoutX="33.0" layoutY="130.0" text="Seleccionar punto" />
-                              <Button fx:id="btnSumar" layoutX="203.0" layoutY="28.0" mnemonicParsing="false" text="sumar vectores" />
-                              <Button fx:id="btnRestar" layoutX="203.0" layoutY="69.0" mnemonicParsing="false" text="Restar vectores" />
-                              <Button fx:id="btnPPunto" layoutX="203.0" layoutY="113.0" mnemonicParsing="false" text="producto punto" />
-                              <Button fx:id="btnNormalizar" layoutX="203.0" layoutY="152.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="normalizar vector" />
-                              <Button fx:id="btnMagnitud" layoutX="473.0" layoutY="69.0" mnemonicParsing="false" text="Calcular magnitud" />
-                              <TextField fx:id="txtMagnitud" layoutX="600.0" layoutY="69.0" prefHeight="25.0" prefWidth="133.0" />
-                              <TextField fx:id="txtSumar" layoutX="336.0" layoutY="28.0" prefHeight="25.0" prefWidth="124.0" />
-                              <TextField fx:id="txtRestar" layoutX="332.0" layoutY="69.0" prefHeight="25.0" prefWidth="133.0" />
-                              <TextField fx:id="txtPPunto" layoutX="332.0" layoutY="113.0" prefHeight="25.0" prefWidth="133.0" />
-                              <TextField fx:id="txtNormalizar" layoutX="332.0" layoutY="151.0" prefHeight="25.0" prefWidth="133.0" />
-                              <TextField fx:id="txtEscalar" layoutX="599.0" layoutY="28.0" prefHeight="25.0" prefWidth="133.0" />
+                              <Button fx:id="btnSumar" layoutX="203.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleSumar" text="sumar vectores" />
+                              <Button fx:id="btnRestar" layoutX="203.0" layoutY="69.0" mnemonicParsing="false" onAction="#handleRestar" text="Restar vectores" />
+                              <Button fx:id="btnPPunto" layoutX="203.0" layoutY="113.0" mnemonicParsing="false" onAction="#handleProductoPunto" text="producto punto" />
+                              <Button fx:id="btnNormalizar" layoutX="203.0" layoutY="152.0" mnemonicParsing="false" onAction="#handleNormalizar" prefHeight="25.0" prefWidth="112.0" text="normalizar vector" />
+                              <Button fx:id="btnMagnitud" layoutX="473.0" layoutY="69.0" mnemonicParsing="false" onAction="#handleMagnitud" text="Calcular magnitud" />
+                              <TextField fx:id="txtMagnitud" layoutX="600.0" layoutY="69.0" onAction="#handleMagnitud" prefHeight="25.0" prefWidth="133.0" />
+                              <TextField fx:id="txtSumar" layoutX="336.0" layoutY="28.0" onAction="#handleSumar" prefHeight="25.0" prefWidth="124.0" />
+                              <TextField fx:id="txtRestar" layoutX="332.0" layoutY="69.0" onAction="#handleRestar" prefHeight="25.0" prefWidth="133.0" />
+                              <TextField fx:id="txtPPunto" layoutX="332.0" layoutY="113.0" onAction="#handleProductoPunto" prefHeight="25.0" prefWidth="133.0" />
+                              <TextField fx:id="txtNormalizar" layoutX="332.0" layoutY="151.0" onAction="#handleNormalizar" prefHeight="25.0" prefWidth="133.0" />
+                              <TextField fx:id="txtEscalar" layoutX="599.0" layoutY="28.0" onAction="#handleGuardarEscalar" prefHeight="25.0" prefWidth="133.0" />
                               <Pane layoutX="741.0" layoutY="27.0" prefHeight="172.0" prefWidth="263.0">
                                  <children>
                                     <Button fx:id="btnVector" layoutX="129.0" layoutY="121.0" mnemonicParsing="false" onAction="#handleCrearVector" prefHeight="25.0" prefWidth="118.0" text="Crear Vector" />
@@ -59,13 +59,13 @@
                                     <Label fx:id="lblY" layoutX="29.0" layoutY="78.0" text="Coordenada Y" />
                                  </children>
                               </Pane>
-                              <Button fx:id="btnAngulo" layoutX="481.0" layoutY="113.0" mnemonicParsing="false" text="Calcular angulo" />
-                              <Button fx:id="btnProyeccion" layoutX="470.0" layoutY="151.0" mnemonicParsing="false" text="obtener proyeccion" />
-                              <Button fx:id="btnMulEscalar" layoutX="481.0" layoutY="193.0" mnemonicParsing="false" text="Multiplicar escalar" />
-                              <Button fx:id="btnEscalar" layoutX="480.0" layoutY="28.0" mnemonicParsing="false" text="Ingresar escalar" />
-                              <TextField fx:id="txtMultEscalar" layoutX="600.0" layoutY="193.0" prefHeight="25.0" prefWidth="133.0" />
-                              <TextField fx:id="txtAngulo" layoutX="600.0" layoutY="113.0" prefHeight="25.0" prefWidth="133.0" />
-                              <TextField fx:id="txtProyeccion" layoutX="600.0" layoutY="151.0" prefHeight="25.0" prefWidth="133.0" />
+                              <Button fx:id="btnAngulo" layoutX="481.0" layoutY="113.0" mnemonicParsing="false" onAction="#handleAngulo" text="Calcular angulo" />
+                              <Button fx:id="btnProyeccion" layoutX="470.0" layoutY="151.0" mnemonicParsing="false" onAction="#handleProyeccion" text="obtener proyeccion" />
+                              <Button fx:id="btnMulEscalar" layoutX="481.0" layoutY="193.0" mnemonicParsing="false" onAction="#handleMultEscalar" text="Multiplicar escalar" />
+                              <Button fx:id="btnEscalar" layoutX="480.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleGuardarEscalar" text="Ingresar escalar" />
+                              <TextField fx:id="txtMultEscalar" layoutX="600.0" layoutY="193.0" onAction="#handleMultEscalar" prefHeight="25.0" prefWidth="133.0" />
+                              <TextField fx:id="txtAngulo" layoutX="600.0" layoutY="113.0" onAction="#handleAngulo" prefHeight="25.0" prefWidth="133.0" />
+                              <TextField fx:id="txtProyeccion" layoutX="600.0" layoutY="151.0" onAction="#handleProyeccion" prefHeight="25.0" prefWidth="133.0" />
                               <Button fx:id="btnVaPunto" layoutX="206.0" layoutY="193.0" mnemonicParsing="false" text="vector a punto" />
                               <Button fx:id="btnTPunto" layoutX="204.0" layoutY="235.0" mnemonicParsing="false" text="trasladar punto" />
                               <Button fx:id="btnDaPunto" layoutX="478.0" layoutY="235.0" mnemonicParsing="false" text="distancia de punto " />

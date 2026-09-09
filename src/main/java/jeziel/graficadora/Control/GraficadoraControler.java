@@ -44,6 +44,7 @@ public class GraficadoraControler implements Initializable {
 
     private final ObservableList <Vector2D> listaVectores = FXCollections.observableArrayList();
     private final ObservableList <Punto2D> listaPuntos = FXCollections.observableArrayList();
+    private double escalarActual = 1.0;
 
     @FXML
     private void handleCrearVector(){
@@ -59,7 +60,7 @@ public class GraficadoraControler implements Initializable {
             txtX.clear();
             txtY.clear();
             if(cboxVectorA.getValue() == null) cboxVectorA.setValue(vector);
-            if(cBoxPuntoA.getValue() == null) cBoxVectorB.setValue(vector);
+            if(cBoxVectorB.getValue() == null) cBoxVectorB.setValue(vector);
 
         }catch (NumberFormatException e){
 
@@ -105,7 +106,7 @@ public class GraficadoraControler implements Initializable {
         if(validarSeleccion(vA,vB)){
 
             double res = vA.obtenerProductoPunto(vB);
-            txtPPunto.setText(String.format(".2f",res));
+            txtPPunto.setText(String.valueOf(res));
 
         }
 
@@ -132,6 +133,7 @@ public class GraficadoraControler implements Initializable {
         }
 
     }
+    @FXML
     private void handleAngulo(){
 
         Vector2D vA = cboxVectorA.getValue();
@@ -140,7 +142,7 @@ public class GraficadoraControler implements Initializable {
         if (validarSeleccion(vA,vB)){
 
             double res = Math.toDegrees(vA.obtenerAngulo(vA,vB));
-            txtAngulo.setText(String.format(".2f",res));
+            txtAngulo.setText(String.valueOf(res));
         }
 
     }
@@ -152,7 +154,7 @@ public class GraficadoraControler implements Initializable {
         if(validarSeleccionIndividual(vA)){
 
             double res = vA.obtenerMagnitud();
-            txtMagnitud.setText(String.format(".2f",res));
+            txtMagnitud.setText(String.valueOf(res));
 
         }
 
@@ -167,7 +169,7 @@ public class GraficadoraControler implements Initializable {
             try{
 
                 Vector2D res = vA.normalizar();
-                txtNormalizar.setText(String.format(".2f",res.toString()));
+                txtNormalizar.setText(res.toString());
 
             } catch (Exception e) {
                 txtError.setText("Error al normalizar vector");
@@ -187,7 +189,7 @@ public class GraficadoraControler implements Initializable {
 
                 double k = Double.parseDouble(txtEscalar.getText());
                 Vector2D res = vA.multEscalar(k);
-                txtMultEscalar.setText(String.format("%.2f",res));
+                txtMultEscalar.setText(res.toString());
 
             }catch (NumberFormatException e){
 
@@ -197,6 +199,16 @@ public class GraficadoraControler implements Initializable {
 
         }
 
+    }
+    @FXML
+    private void handleGuardarEscalar(){
+    try {
+        this.escalarActual = Double.parseDouble(txtEscalar.getText());
+    }catch (NumberFormatException e){
+
+        txtError.setText("Error al guardar escalar");
+
+    }
     }
 
     @Override
