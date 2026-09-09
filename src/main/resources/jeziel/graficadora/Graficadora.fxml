@@ -19,7 +19,11 @@
                         <SplitPane dividerPositions="0.29797979797979796" layoutY="-1.0" prefHeight="496.0" prefWidth="1055.0">
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="392.0" />
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="728.0" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="494.0" prefWidth="728.0" >
+                                    <children>
+                                       <fx:include fx:id="planoCartesiano" source="Plano-cartesiano.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    </children>
+                            </AnchorPane>
                           </items>
                         </SplitPane>
                      </children>

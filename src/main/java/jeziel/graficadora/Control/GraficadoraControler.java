@@ -20,6 +20,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class GraficadoraControler implements Initializable {
+    @FXML private planoCartesianoController planoCartesianoController;
     @FXML
     private Pane containerPane;
     @FXML private TextField txtX;
@@ -59,6 +60,10 @@ public class GraficadoraControler implements Initializable {
 
             Punto2D punto = new Punto2D(x,y);
             listaPuntos.add(punto);
+
+            if (planoCartesianoController != null) {
+                planoCartesianoController.agregarPunto2D(x, y);
+            }
 
             txtX.clear();
             txtY.clear();
@@ -123,6 +128,10 @@ if(pA == null || vA==null){
 
             Vector2D vector = new Vector2D(x,y);
             listaVectores.add(vector);
+
+            if (planoCartesianoController != null) {
+                planoCartesianoController.agregarVector2D(x, y);
+            }
 
             txtX.clear();
             txtY.clear();
