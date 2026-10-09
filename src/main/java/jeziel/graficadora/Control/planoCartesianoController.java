@@ -1,10 +1,12 @@
 package jeziel.graficadora.Control;
 
 import javafx.fxml.FXML;
+import javafx.geometry.VPos;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 import jeziel.graficadora.Modelos.Plano;
 
 public class planoCartesianoController {
@@ -15,16 +17,24 @@ public class planoCartesianoController {
     private Canvas lienzo;
 
     private GraphicsContext g; //Clase ya implementada para modelar un sistema de coordenadas en 2D
-    private Plano planoMatematico;
-    private static final double PIXELES_POR_DIVISION = 80;
-    private static final double pixelesPunto = 5;
-    private static final double pasosEscala = 5;
-    private static final double ESCALA_MINIMA = 1;
+    private Plano planoMatematico; //Ya parte del modelo, seria la representación abstracta del plano carteiano
     private double escala = 50;
-    private double origenX;
-    private double origenY;
-    private boolean inicializado = false;
+    private final double pasoDeseado = 80;
+    private static final double escalaMin = 1, escalaMax = 1e6;
 
+    //variables para el funcionamiento del arrastre del mouse
+    private double ultimoMouseX = 0;
+    private double ultimoMouseY = 0;
+
+    //Origenes para que saber en el mundo matematico a que corresponde
+    private double origenX = 0;
+    private double origenY = 0;
+
+
+
+    //Variables relacionadas con el canvas y el graphscene
+    private double anchoCanva;
+    private double altoCanva;
 
     @FXML
     private void initialize() {
@@ -37,134 +47,147 @@ public class planoCartesianoController {
         lienzo.widthProperty().addListener((o, a, b) -> redibujarAjustando()); //Como lienzo es un canvas es necesario añadir listener para escuchar el cambio de posicion cuando se hace zoom out o in
         lienzo.heightProperty().addListener((o, a, b) -> redibujarAjustando());
 
+        setScroll();
+        setDrag();
+
         dibujar();
     }
 
-    //metodo personalizado para recaclcular las posiciones
+
+    //Método principipal para dibujar en el plano.
     private void dibujar() {
-        double w = lienzo.getWidth();
-        double h = lienzo.getHeight();
-        if (w <= 0 || h <= 0) return;
+        altoCanva = lienzo.getHeight();
+        anchoCanva = lienzo.getWidth();
+        g.clearRect(0, 0, anchoCanva, altoCanva);
+        dibujarCuadricula(calcularPaso());
+        dibujarEjes();
+        dibujarNumeros();
 
-        g.setFill(Color.WHITE);
-        g.fillRect(0, 0, w, h);
 
-        this.origenX = w / 2;
-        this.origenY = h / 2;
+    }
 
-        g.setStroke(Color.web("#d5dde3"));
+    public void dibujarEjes() {
+        double xEjeY = nitido(xMatematicoAPixel(0));
+        double yEjeX = nitido(yMatematicoAPixel(0));
         g.setLineWidth(1);
-        for (double x = origenX % escala; x < w; x += escala) {
-            g.strokeLine(Math.round(x) + 0.5, 0, Math.round(x) + 0.5, h);
-        }
-        for (double y = origenY % escala; y < h; y += escala) {
-            g.strokeLine(0, Math.round(y) + 0.5, w, Math.round(y) + 0.5);
-        }
-
-        g.setStroke(Color.web("#3a4750"));
-        g.setLineWidth(1.4);
-        g.strokeLine(0, Math.round(origenY) + 0.5, w, Math.round(origenY) + 0.5);
-        g.strokeLine(Math.round(origenX) + 0.5, 0, Math.round(origenX) + 0.5, h);
-        for (int i = 0; i < planoMatematico.getPuntos2D().size(); i++){
-            dibujarPunto2D(planoMatematico.getPuntos2D().get(i).getOrdenadaX(),planoMatematico.getPuntos2D().get(i).getOrdenadaY());
-        }
-        for (int i = 0; i < planoMatematico.getVectores2D().size(); i++){
-            dibujarVector2D(planoMatematico.getVectores2D().get(i).getVectorX(),planoMatematico.getVectores2D().get(i).getVectorY());
-        }
+        g.setStroke(Color.BLACK);
+        g.strokeLine(xEjeY, 0, xEjeY, altoCanva);  // Eje y
+        g.strokeLine(0, yEjeX, anchoCanva, yEjeX);  //Eje x
     }
 
-    private boolean fueraDeRango(double xPixel, double yPixel){
-        return xPixel < 0 || xPixel > lienzo.getWidth() || yPixel < 0 || yPixel > lienzo.getHeight();
-    }
-
-    //Comprueba si unas coordenadas cabrian en el lienzo con una escala dada, SIN modificar ni dibujar nada
-    private boolean cabeConEscala(double ordenadaX, double ordenadaY, double escalaCandidata){
-        double xPixel = (ordenadaX * escalaCandidata) + (lienzo.getWidth() / 2);
-        double yPixel = (lienzo.getHeight() / 2) - (ordenadaY * escalaCandidata);
-        return !fueraDeRango(xPixel, yPixel);
-    }
-
-    //Busca la escala con la que unas coordenadas si caben. Devuelve -1 si no caben ni con la escala minima.
-    private double calcularEscalaPara(double ordenadaX, double ordenadaY){
-        double escalaCandidata = escala;
-        while (!cabeConEscala(ordenadaX, ordenadaY, escalaCandidata) && escalaCandidata > ESCALA_MINIMA){
-            escalaCandidata = Math.max(escalaCandidata - pasosEscala, ESCALA_MINIMA);
+    public void dibujarCuadricula(double paso) {
+        g.setLineWidth(0.5);
+        g.setStroke(Color.rgb(126, 126, 126)); //color gris para cuadricula
+        double xMin = xPixelAMatematico(0); //Se calcula el minimoX visible
+        double xMax = xPixelAMatematico(anchoCanva); //Se calcula el maximoX visible
+        double yMin = yPixelAMatematico(altoCanva); //Se calcula el minimoY visible
+        double yMax = yPixelAMatematico(0); // Se calcula el maximoY visible
+        long primeroX = (long) Math.ceil(xMin / paso);
+        long ultimoX = (long) Math.floor(xMax / paso);
+        long primeroY = (long) Math.ceil(yMin / paso);
+        long ultimoY = (long) Math.floor(yMax / paso);
+        for (long i = primeroX; i <= ultimoX; i++) {
+            double x = i * paso;
+            double px = nitido(xMatematicoAPixel(x));
+            g.strokeLine(px, 0, px, altoCanva);
         }
-        return cabeConEscala(ordenadaX, ordenadaY, escalaCandidata) ? escalaCandidata : -1;
-    }
-
-    //Baja la escala lo necesario para que todo lo que ya esta en el plano siga cabiendo
-    private void ajustarEscalaAlContenido(){
-        for (int i = 0; i < planoMatematico.getPuntos2D().size(); i++){
-            double necesaria = calcularEscalaPara(planoMatematico.getPuntos2D().get(i).getOrdenadaX(),
-                    planoMatematico.getPuntos2D().get(i).getOrdenadaY());
-            if (necesaria > 0) escala = necesaria;
-        }
-        for (int i = 0; i < planoMatematico.getVectores2D().size(); i++){
-            double necesaria = calcularEscalaPara(planoMatematico.getVectores2D().get(i).getVectorX(),
-                    planoMatematico.getVectores2D().get(i).getVectorY());
-            if (necesaria > 0) escala = necesaria;
+        for (long i = primeroY; i <= ultimoY; i++) {
+            double y = i * paso;
+            double py = nitido(yMatematicoAPixel(y));
+            g.strokeLine(0, py, anchoCanva, py);
         }
     }
 
-    //Reajusta el zoom a lo que ya hay en el plano y vuelve a dibujar (al cambiar el tamaño del lienzo)
-    private void redibujarAjustando(){
-        ajustarEscalaAlContenido();
-        dibujar();
+    public double calcularPaso() {
+        double pasoBruto = pasoDeseado / escala;
+        double exponente = Math.floor(Math.log10(pasoBruto));
+        double base = Math.pow(10, exponente);
+        double fraccion = pasoBruto / base;
+        double factor;
+        if (fraccion <= 1) factor = 1;
+        else if (fraccion <= 2) factor = 2;
+        else if (fraccion <= 5) factor = 5;
+        else factor = 10;
+        return factor * base;
     }
 
-    //Estos dos metodos SOLO dibujan: no tocan la escala ni llaman a dibujar(), asi no hay recursion
-    private void dibujarPunto2D(double ordenadaX, double ordenadaY){
-        double ordenadaXPixel = xmatematicoAPixelX(ordenadaX);
-        double ordenadaYPixel = ymatematicoAPixelY(ordenadaY);
-        if (fueraDeRango(ordenadaXPixel, ordenadaYPixel)) return;
 
-        g.setFill(Color.BLACK); //¿Tal vez poner para que vaya cambiando de color conforme los puntos que se agreguen?
-        g.fillOval(ordenadaXPixel - pixelesPunto, ordenadaYPixel - pixelesPunto, 2*pixelesPunto, 2*pixelesPunto);
+    private void setScroll() {
+        lienzo.setOnScroll(e -> {
+            if (e.getDeltaY() == 0) return;
+
+            double factor = Math.pow(1.1, e.getDeltaY() / 40.0);
+
+            double nuevaEscala = Math.clamp(escala * factor, escalaMin, escalaMax);
+            factor = nuevaEscala / escala; // factor real tras el límite
+
+            double px = e.getX(), py = e.getY();
+            origenX = (px - (px - calcularPosicionOrigenX()) * factor) - anchoCanva / 2;
+            origenY = (py - (py - calcularPosicionOrigenY()) * factor) - altoCanva / 2;
+            escala = nuevaEscala;
+
+            dibujar();
+            e.consume();
+        });
     }
 
-    private void dibujarVector2D(double ordenadaX, double ordenadaY){
-        double ordenadaXPixel = xmatematicoAPixelX(ordenadaX);
-        double ordenadaYPixel = ymatematicoAPixelY(ordenadaY);
-        if (fueraDeRango(ordenadaXPixel, ordenadaYPixel)) return;
+    private void setDrag(){
+        lienzo.setOnMousePressed(e -> {
+            ultimoMouseX = e.getX();
+            ultimoMouseY = e.getY();
+        });
 
-        g.setStroke(Color.BLACK); //¿Tal vez poner para que vaya cambiando de color conforme los puntos que se agreguen?
-        g.setLineWidth(1);
-        g.strokeLine(origenX, origenY, ordenadaXPixel, ordenadaYPixel);
-        dibujarCabezaFlecha(ordenadaX, ordenadaY);
+        lienzo.setOnMouseDragged(e -> {
+            origenX += (e.getX() - ultimoMouseX);
+            origenY += (e.getY() - ultimoMouseY);
+            ultimoMouseX = e.getX();
+            ultimoMouseY = e.getY();
+            dibujar();
+        });
     }
 
-    private void dibujarCabezaFlecha(double ordenadaX, double ordenadaY) {
-        if (ordenadaX == 0 && ordenadaY == 0) return;
-        double anguloVector = Math.atan2(ordenadaY, ordenadaX);
-        double longitudCabeza = 0.35; //Longitud de las aletas me da pereza hacerlo dinamico xdd
-        double anguloApertura = Math.toRadians(45);
-        double anguloAleta1 = anguloVector + Math.PI - anguloApertura; // 180° - 45°
-        double anguloAleta2 = anguloVector + Math.PI + anguloApertura; // 180° + 45°
+    private void dibujarNumeros(){
+        double posicionEjeY = yMatematicoAPixel(0) + 3;
+        posicionEjeY = Math.clamp(posicionEjeY, -altoCanva, altoCanva);
+        double posicionEjeX = xMatematicoAPixel(0) + 3;
+        posicionEjeX = Math.clamp(posicionEjeX, -anchoCanva, anchoCanva);
+        double paso = calcularPaso();
+        double xMin = xPixelAMatematico(0); //Se calcula el minimoX visible
+        double xMax = xPixelAMatematico(anchoCanva); //Se calcula el maximoX visible
+        double yMin = yPixelAMatematico(altoCanva); //Se calcula el minimoY visible
+        double yMax = yPixelAMatematico(0); // Se calcula el maximoY visible
+        long primeroX = (long) Math.ceil(xMin / paso);
+        long ultimoX = (long) Math.floor(xMax / paso);
+        long primeroY = (long) Math.ceil(yMin / paso);
+        long ultimoY = (long) Math.floor(yMax / paso);
+        g.setTextAlign(TextAlignment.CENTER);
+        g.setTextBaseline(VPos.TOP);
+        for (long i = primeroX; i <= ultimoX; i++) {
+            double x = i * paso;
+            g.fillText(String.valueOf(x),xMatematicoAPixel(x) ,posicionEjeY);
+        }
+        for (long i = primeroY; i <= ultimoY; i++) {
+            double y = i * paso;
+            g.fillText(String.valueOf(y), posicionEjeX, yMatematicoAPixel(y));
+        }
 
-        double xAleta1 = ordenadaX + longitudCabeza * Math.cos(anguloAleta1);
-        double yAleta1 = ordenadaY + longitudCabeza * Math.sin(anguloAleta1);
-
-        double xAleta2 = ordenadaX + longitudCabeza * Math.cos(anguloAleta2);
-        double yAleta2 = ordenadaY + longitudCabeza * Math.sin(anguloAleta2);
-
-        double xPuntaPixel = xmatematicoAPixelX(ordenadaX);
-        double yPuntaPixel = ymatematicoAPixelY(ordenadaY);
-
-        double xAleta1Pixel = xmatematicoAPixelX(xAleta1);
-        double yAleta1Pixel = ymatematicoAPixelY(yAleta1);
-
-        double xAleta2Pixel = xmatematicoAPixelX(xAleta2);
-        double yAleta2Pixel = ymatematicoAPixelY(yAleta2);
-
-        g.strokeLine(xPuntaPixel, yPuntaPixel, xAleta1Pixel, yAleta1Pixel);
-        g.strokeLine(xPuntaPixel, yPuntaPixel, xAleta2Pixel, yAleta2Pixel);
     }
 
-    //Metodos para agregar puntos y vectores al plano.
-    //Primero se calcula si cabe y con que escala; solo si cabe se guarda y se dibuja.
-    //Asi, cuando no se puede representar, la escala nunca llego a modificarse y no hay que restaurarla.
-    public boolean agregarPunto2D(double ordenadaX, double ordenadaY){
+
+    //Más metodos auxiliares
+    private double calcularPosicionOrigenX() {
+        return origenX + anchoCanva / 2;
+    }
+
+    private double calcularPosicionOrigenY() {
+        return origenY + altoCanva / 2;
+    }
+
+
+    /*Metodos para agregar puntos y vectores al plano.
+    Primero se calcula si cabe y con que escala; solo si cabe se guarda y se dibuja.
+    Asi, cuando no se puede representar, la escala nunca llego a modificarse y no hay que restaurarla.*/
+    public boolean agregarPunto2D(double ordenadaX, double ordenadaY) {
         double escalaNecesaria = calcularEscalaPara(ordenadaX, ordenadaY);
         if (escalaNecesaria < 0) return false; //no cabe ni con la escala minima: no se cambia nada
 
@@ -174,7 +197,7 @@ public class planoCartesianoController {
         return true;
     }
 
-    public boolean agregarVector2D(double ordenadaX, double ordenadaY){
+    public boolean agregarVector2D(double ordenadaX, double ordenadaY) {
         double escalaNecesaria = calcularEscalaPara(ordenadaX, ordenadaY);
         if (escalaNecesaria < 0) return false; //no cabe ni con la escala minima: no se cambia nada
 
@@ -185,12 +208,31 @@ public class planoCartesianoController {
     }
 
     //Metodos auxiliares para transformar coordenadas cartesianas a Pixeles
-    private double xmatematicoAPixelX(double xMatematico){
-        return (xMatematico * escala) + origenX;
+    private double xMatematicoAPixel(double xMatematico) {
+        return calcularPosicionOrigenX() + (xMatematico * escala);
     }
 
-    private double ymatematicoAPixelY(double yMatematico){
-        return origenY - (yMatematico * escala);
+    private double yMatematicoAPixel(double yMatematico) {
+        return calcularPosicionOrigenY() - (yMatematico * escala);
     }
 
+
+    //metodo para evitar aliasing
+    private double nitido(double p) {
+        return Math.floor(p) + 0.5;
+    }
+
+
+    //Metodos auxiliares para transformar coordenadas Pixeles a cartesianas
+    private double xPixelAMatematico(double px) {
+        return (px - calcularPosicionOrigenX()) / escala;
+    }
+
+    private double yPixelAMatematico(double py) {
+        return (calcularPosicionOrigenY() - py) / escala;
+    }
+
+    public Canvas getLienzo() {
+        return lienzo;
+    }
 }
